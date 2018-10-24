@@ -404,6 +404,38 @@ class Honkbot():
                 await self.client.send_message(
                     message.channel, "I do not have permissions to assign roles right now. Sorry!")
 
+    async def poqere_generator(self, message, num_of_chars):
+        """
+        generates some poqere nonsense
+        Requires: num_of_chars, the number of characters in the generation (min. 3)
+        """
+        if num_of_chars < 3 or num_of_chars is not int:
+            num_of_chars = 3
+        str = "poqer" + ''.join([random.choice('eiorr') for _ in range(num_of_chars)])
+        await self.client.send_message(message.channel, "poqere generation: " + str)
+
+    async def lizard_generator(self, message):
+        """
+        generates something lizard related
+        Requires: ????
+        """
+        value = random.choice('abcd')
+        lizard_facts = ['Lizards are able to smell by tasting the air around them. ',
+                        'There are more than 5,600 different species of Lizards around the world.',
+                        'Only some species of Lizards lay eggs. Others give live birth depending on the species.',
+                        'Lizards are cute']
+        lizard_images = ['https://i.imgur.com/Ffxha1G.jpg','https://i.imgur.com/bmlUTnU.jpg',
+                         'https://i.imgur.com/S5BfA6J.jpg','https://i.imgur.com/6xhDA1C.jpg']
+        if value == 'a' or 'b' or 'c':
+            #return a lizard fact
+            fact = lizard_facts[random.randrange(len(lizard_facts))]
+            await self.client.send_message(message.channel, "LIZARD FACT : " + fact)
+        else:
+            #return a lizard picture
+            pic = lizard_images[random.randrange(len(lizard_images))]
+            await self.client.send_message(message.channel, "Lucky you, a lizard picture!" + pic)
+
+
 
 if "__main__" in __name__:
 
