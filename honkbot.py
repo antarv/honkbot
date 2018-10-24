@@ -46,7 +46,9 @@ class Honkbot():
             "!ranatalus",
             "!eamuse",
             "!help",
-            "!insult"
+            "!insult",
+            "!poqere",
+            "!lizard"
         ]
 
         self.eamuse_maint = {
@@ -104,6 +106,10 @@ class Honkbot():
             await self.get_record(message)
         elif message.content.startswith('!eamuse'):
             await self.get_eamuse_maintenance()
+        elif message.content.startswith('!poqere'):
+            await self.poqere_generator(7)
+        elif message.content.startswith('!lizard'):
+            await self.lizard_generator()
 
         elif "honk" in message.content.lower() and "bot4u" not in message.author.name:
             # HONK WINS AGAIN
@@ -404,7 +410,7 @@ class Honkbot():
                 await self.client.send_message(
                     message.channel, "I do not have permissions to assign roles right now. Sorry!")
 
-    async def poqere_generator(self, message, num_of_chars):
+    async def poqere_generator(self, num_of_chars):
         """
         generates some poqere nonsense
         Requires: num_of_chars, the number of characters in the generation (min. 3)
@@ -414,7 +420,7 @@ class Honkbot():
         str = "poqer" + ''.join([random.choice('eiorr') for _ in range(num_of_chars)])
         await self.client.send_message(message.channel, "poqere generation: " + str)
 
-    async def lizard_generator(self, message):
+    async def lizard_generator(self):
         """
         generates something lizard related
         Requires: ????
