@@ -107,9 +107,9 @@ class Honkbot():
         elif message.content.startswith('!eamuse'):
             await self.get_eamuse_maintenance()
         elif message.content.startswith('!poqere'):
-            await self.poqere_generator(message, 7)
+            await self.poqere_generator(7)
         elif message.content.startswith('!lizard'):
-            await self.lizard_generator(message)
+            await self.lizard_generator()
 
         elif "honk" in message.content.lower() and "bot4u" not in message.author.name:
             # HONK WINS AGAIN
