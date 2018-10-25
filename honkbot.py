@@ -105,11 +105,12 @@ class Honkbot():
         elif message.content.startswith('!record'):
             await self.get_record(message)
         elif message.content.startswith('!eamuse'):
-            await self.get_eamuse_maintenance()
+            await self.get_eamuse_maintenance(message)
         elif message.content.startswith('!poqere'):
-            await self.poqere_generator(7)
+            await self.poqere_generator(message, 7)
         elif message.content.startswith('!lizard'):
-            await self.lizard_generator()
+            await self.lizard_generator(message)
+
 
         elif "honk" in message.content.lower() and "bot4u" not in message.author.name:
             # HONK WINS AGAIN
@@ -122,7 +123,7 @@ class Honkbot():
             commands = "".join(["Commands are: ",", ".join(self.command_list)])
             await self.client.send_message(message.channel, commands)
 
-    async def get_eamuse_maintenance(self):
+    async def get_eamuse_maintenance(self, message):
         """
         Gets eAmusement maintenance time.
 
@@ -140,11 +141,11 @@ class Honkbot():
         firstmonday = (0 - bom) % 7 + 1
         thirdmonday = range(firstmonday, days+1, 7)[2]
         if today.day == thirdmonday:
-            maint['ddr'] = eamuse_maint['us']
-            maint['other'] = eamuse_maint['extended']
+            maint['ddr'] = self.eamuse_maint['us']
+            maint['other'] = self.eamuse_maint['extended']
         else:
             maint['ddr'] = None
-            maint['other'] = eamuse_maint['normal']
+            maint['other'] = self.eamuse_maint['normal']
 
         if maint['ddr']:
             begin_time = east_time.replace(hour=int(maint['ddr'][0].split(":")[0]),minute=0)
@@ -410,7 +411,7 @@ class Honkbot():
                 await self.client.send_message(
                     message.channel, "I do not have permissions to assign roles right now. Sorry!")
 
-    async def poqere_generator(self, num_of_chars):
+    async def poqere_generator(self, message, num_of_chars):
         """
         generates some poqere nonsense
         Requires: num_of_chars, the number of characters in the generation (min. 3)
@@ -420,7 +421,7 @@ class Honkbot():
         str = "poqer" + ''.join([random.choice('eiorr') for _ in range(num_of_chars)])
         await self.client.send_message(channel, "poqere generation: " + str)
 
-    async def lizard_generator(self):
+    async def lizard_generator(self, message):
         """
         generates something lizard related
         Requires: ????
@@ -435,11 +436,11 @@ class Honkbot():
         if value == 'a' or 'b' or 'c':
             #return a lizard fact
             fact = lizard_facts[random.randrange(len(lizard_facts))]
-            await self.client.send_message(channel, "LIZARD FACT : " + fact)
+            await self.client.send_message(message.channel, "LIZARD FACT : " + fact)
         else:
             #return a lizard picture
             pic = lizard_images[random.randrange(len(lizard_images))]
-            await self.client.send_message(channel, "Lucky you, a lizard picture!" + pic)
+            await self.client.send_message(message.channel, "Lucky you, a lizard picture!" + pic)
 
 
 
